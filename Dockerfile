@@ -26,6 +26,7 @@ USER vtna
 # Install the required python packages in the home of the user
 RUN pip install --no-cache-dir -r frontend/requirements.txt --user
 RUN pip install --no-cache-dir git+https://github.com/marvinf95/vtna.git --user
+RUN pip install --no-cache-dir appmode --user
 
 # Delete unnacessary files
 RUN rm frontend/requirements.txt
@@ -35,6 +36,8 @@ ENV PATH="/home/vtna/.local/bin:${PATH}"
 
 # Extensions that are needed to show widgets in the notebook 
 RUN jupyter nbextension enable --py widgetsnbextension --user && jupyter nbextension install --py fileupload --user && jupyter nbextension enable --py fileupload --user
+RUN jupyter nbextension enable --py --user appmode
+RUN jupyter serverextension enable --py --user appmode
 
 # The notebook could be reached on port 8888
 EXPOSE 8888
